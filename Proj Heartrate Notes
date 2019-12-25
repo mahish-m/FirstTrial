@@ -1,0 +1,51 @@
+Proj Heartrate Notes
+Mahish Mahendarkar
+11/4/2019
+Max Heart rate application 
+https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/exercise-intensity/art-20046887
+Language: Python/android/iOs
+
+Phase 1
+	heart rate calculation calculator
+	
+	input: age
+	output: max beats per minute, target heart rate
+	calculate: max heart rate/target heart rate
+
+	max heart rate (age)
+		return (220 - age)
+
+	*high and low percent are user set - what percentage of max heart rate do you want to check for - default = 70,85*
+	target heart rate (resting heart rate, max heart rate(age), low percent, high percent)
+
+	- check for resting heart rate in the morning
+
+	- for target heart rate return both average and range
+		- Heart rate resevre = (max heart rate - resting)
+		- low range = (Heart rate reserve * low percent) + resting
+		- high range = (Heart rate reserve * high percent) + resting
+		- average = (high range - low range)/2 + low range
+Phase 2
+	input: from phone health data, time for update
+	output: notif at user specified time for update
+
+	notifications
+	at specified time with 
+	- met target range or not , what is range
+	- met max or not
+	- highest bpm + time 
+
+	Phase 1 + better UI
+	- sliders
+	- color scheme
+	- logs on a weekly basis 
+
+Phase 3
+	Phase 2 + graph
+	graph
+	- periodic activity charted , gradient and percent of times that target was met
+
+TO DO:
+Python cmd prompt 
+android with app developer
+swift or other ios version
