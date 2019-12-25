@@ -42,23 +42,36 @@
 #		- high range = (Heart rate reserve * high percent) + resting
 #		- average = (high range - low range)/2 + low range
 
+
+#calculating specified metrics
 def calculate(data):
-	outputStr = ""
-	if("target" in data):
-		
-	elif("max" in options):
-		outputStr = 220 - data['AGE']
+	outputStr = ""	
+	if("max" in data["Tests"] or "Max" in data["Tests"]):
+		maxedHeartRate = 220 - data['AGE']
+		outputStr += "Max heart rate for you is " + str(maxedHeartRat) +"bpm"
+	if("target" in data["Tests"] or "Target" in data["Tests"]):
+
+		HeartRateReserve = maxedHeartRat - data["Resting"]
+		low = (HeartRateReserve * data["Range"][0]) + data["Resting"]
+		high = (HeartRateReserve * data["Range"][1]) + data["Resting"]
+		average =  ((high - low)/2) + low
+		outputStr += "The average heart rate at a range of " + data["Range"] + " is " + str(average) +
+		"\nThe range for heart rate is between " + str(low) + "bpm and " + str(high) + "bpm" 
 	return outputStr
+#setting up a dictionary with all necessary data labeled
 def intake():
 	age = int(input("Age: "))
-	options = str(input("Do you want Max Heart Rate(1) or Target Heart Rate(2)? \nType the numbers corresponding to the calculation: "))
+	options = str(input("Do you want Max Heart Rate(Max) or Target Heart Rate(Target)? \nType the metric corresponding to your needs: "))
+	resting = int(input("Resting heart rate(count the number of beats in one minute): "))
+	data = {"Age": age, "Tests": options, "Resting": resting}
+#making the right range based on user data
 	if('2' in options):
 		default = str(input("Default range or custom range? For default enter Y for custom enter N: "))
 		if("Y" in default or "y" in default):
 			data["Range"] = [70,85]
 		elif("N" in default or "n" in default):
-			low = int(input("Low end range: "))
-			high = int(input("High end range: "))
+			low = int(input("Low end percentage(two digit): "))
+			high = int(input("High end percentage(two digit): "))
 			data["Range"] = [low,high]
-	data = {"Age": age, "Tests": options}
 	return data
+print(calculate(intake()))
