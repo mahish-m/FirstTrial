@@ -17,8 +17,6 @@
 #calculate desired 
 #display results
 
-
-
 #overview 
 #	heart rate calculation calculator
 #	
@@ -28,7 +26,7 @@
 #
 #	max heart rate (age)
 #		return (220 - age)
-#
+
 #	*high and low percent are user set 
 #- what percentage of max heart rate do you want to check for - 
 #	default = 70,85*
@@ -45,24 +43,31 @@
 
 #calculating specified metrics
 def calculate(data):
-	outputStr = ""	
+	#intializing the output string
+	outputStr = ""
+	#max test results	
 	if("max" in data["Tests"] or "Max" in data["Tests"]):
 		maxedHeartRate = 220 - data['AGE']
 		outputStr += "Max heart rate for you is " + str(maxedHeartRat) +"bpm"
+	#target test results
 	if("target" in data["Tests"] or "Target" in data["Tests"]):
-
+		#setting up required calculations
+		#source: mayoclinic
 		HeartRateReserve = maxedHeartRat - data["Resting"]
 		low = (HeartRateReserve * data["Range"][0]) + data["Resting"]
 		high = (HeartRateReserve * data["Range"][1]) + data["Resting"]
 		average =  ((high - low)/2) + low
+		#outputted string
 		outputStr += "The average heart rate at a range of " + data["Range"] + " is " + str(average) +
 		"\nThe range for heart rate is between " + str(low) + "bpm and " + str(high) + "bpm" 
+	#ending
 	return outputStr
 #setting up a dictionary with all necessary data labeled
 def intake():
 	age = int(input("Age: "))
-	options = str(input("Do you want Max Heart Rate(Max) or Target Heart Rate(Target)? \nType the metric corresponding to your needs: "))
+	options = str(input("Do you want Max Heart Rate(Max) or Target Heart Rate(Target)? \nType the name in parenthesis corresponding to your needs: "))
 	resting = int(input("Resting heart rate(count the number of beats in one minute): "))
+	#dictionary with inputted values
 	data = {"Age": age, "Tests": options, "Resting": resting}
 #making the right range based on user data
 	if('2' in options):
@@ -70,8 +75,13 @@ def intake():
 		if("Y" in default or "y" in default):
 			data["Range"] = [70,85]
 		elif("N" in default or "n" in default):
+			#setting the range
 			low = int(input("Low end percentage(two digit): "))
 			high = int(input("High end percentage(two digit): "))
 			data["Range"] = [low,high]
 	return data
-print(calculate(intake()))
+#printing the result and calling required methods while setting up for any exceptions
+try:
+	print(calculate(intake()))
+except:
+	print("That is an incorrect entry")
